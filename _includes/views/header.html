@@ -16,7 +16,6 @@
     <div class="site-header-inner">
       {%- assign default_paths = site.pages | where: "dir", "/" | map: "path" -%}
       {%- assign page_paths = site.header_pages | default: default_paths -%}
-      {{ page_paths }}
 
       <span class="site-brand">
         {%- include views/site-brand.html -%}
