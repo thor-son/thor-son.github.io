@@ -24,9 +24,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Your awesome title
-email: your-email@domain.com
-author: GitHub User
+title: thor son blog
+email: shspink2@gmail.com
+author: thor-son
 
 # Copyright setting
 # You can use any html code, currently below placeholders are available:
@@ -54,7 +54,7 @@ favicon: "" # the favicon for your site
 # Yat date format
 # refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
 yat:
-  date_format: "%b %d, %Y"
+  date_format: "%m %d, %Y"
 
 # If you want more debug log, you can set true
 # debug: false
