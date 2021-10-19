@@ -32,7 +32,7 @@
             </span>
           </label>
 
-          {%- set page_paths_am = [] -%}
+          {%- assign page_paths_am = [] -%}
           {{ page_paths_am.append( "index.html" ) }}
           {%- for p_path in page_paths -%}
             {%- if p_path != "index.html" -%} 
