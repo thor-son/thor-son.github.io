@@ -16,7 +16,15 @@
     <div class="site-header-inner">
       {%- assign default_paths = site.pages | where: "dir", "/" | map: "path" -%}
       {%- assign page_paths = site.header_pages | default: default_paths -%}
-      {{ page_paths }}
+      
+          {%- assign page_paths_am = [] -%}
+          {{ page_paths_am.append( "index.html" ) }}
+          {%- for p_path in page_paths -%}
+            {%- if p_path != "index.html" -%} 
+            {{ page_paths_am.append( p_path ) }}
+            {%- endif -%}
+          {%- endfor -%}
+      {{ page_paths_am }}
 
       <span class="site-brand">
         {%- include views/site-brand.html -%}
@@ -33,13 +41,6 @@
             </span>
           </label>
 
-          {%- assign page_paths_am = [] -%}
-          {{ page_paths_am.append( "index.html" ) }}
-          {%- for p_path in page_paths -%}
-            {%- if p_path != "index.html" -%} 
-            {{ page_paths_am.append( p_path ) }}
-            {%- endif -%}
-          {%- endfor -%}
           <div class="trigger">
             {%- for path in page_paths_am -%}
               {%- assign my_page = site.pages | where: "path", path | first -%}
