@@ -40,6 +40,9 @@
               <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | upcase | escape }}</a>
               {%- endif -%}
             {%- endfor -%}
+            <a class="page-link" href="https://github.com/thor-son">
+              <img  src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
+            </a>
 
             {%- assign name = 'translate_langs' -%}
             {%- include functions.html func='get_value' -%}
