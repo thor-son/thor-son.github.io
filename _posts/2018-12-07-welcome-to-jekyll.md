@@ -72,3 +72,12 @@ p1 = Person("John", 36)
 print(p1.name)
 print(p1.age)
 ```
+
+```php
+function test(){
+    echo("test");
+}
+$v = 1;
+```
+
+<script src="https://gist.github.com/thor-son/19042f1b7f8ac352f7a133dc8ab73d49.js"></script>
