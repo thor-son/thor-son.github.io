@@ -12,12 +12,13 @@ tag: [eks, aws, kubernetes, ingress]
   
   
 aws eks에서 ingress-nginx를 설치할 경우, service type=LoadBalancer를 nlb로 구성해준다.
-<a href="[http://example.com/](https://kubernetes.github.io/ingress-nginx/deploy/#aws)" target="_blank">link</a>
+<a href="https://kubernetes.github.io/ingress-nginx/deploy/#aws" target="_blank">link</a>
 
 
 ### eks ingress-nginx 구축
-[link](https://kubernetes.github.io/ingress-nginx/deploy/#network-load-balancer-nlb)
-
+<a href="https://kubernetes.github.io/ingress-nginx/deploy/#network-load-balancer-nlb" target="_blank">link</a>
+  
+  
 **kubectl apply로 구축**  
 
 ```console
@@ -88,7 +89,7 @@ $ kubectl logs ingress-nginx-controller-5cc4f7674-x6s6l -n ingress-nginx
 W1007 01:50:48.650866       6 controller.go:258] ignoring ingress ingress-test in default based on annotation : ingress does not contain a valid IngressClass
 I1007 01:50:48.650887       6 main.go:100] "successfully validated configuration, accepting" ingress="default/ingress-test"
 I1007 01:50:48.659468       6 store.go:426] "Ignoring ingress because of error while validating ingress class" ingress="default/ingress-test" error="ingress does not contain a valid IngressClass"
-```
+```  
   
   
   
@@ -102,14 +103,15 @@ spec:
   ingressClassName: nginx       <-- 추가
   rules:
 ....
-```
+```  
   
   
   
 또는
   
 ingressClass 에 대한 문서를 보니, default 로 class를 지정할 수 있었다.  
-[link](https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/ingress/ingress_class/)
+<a href="https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/ingress/ingress_class/s" target="_blank">link</a>
+
 ```console
 $ kubectl get ingressclasses --namespace=ingress-nginx
 
@@ -137,6 +139,9 @@ metadata:
 ![ingressClass](/assets/images/ingressClass.png)
   
   
+  
+  
+  
 ingress-contoller 의 pod log가 아래와 같이 출력이되면 ingress가 잘 설정 된 것이다.
 ```console
 $ kubectl logs ingress-nginx-controller-5cc4f7674-x6s6l -n ingress-nginx
@@ -148,14 +153,14 @@ I1007 02:33:20.555472       6 event.go:285] Event(v1.ObjectReference{Kind:"Ingre
 I1007 02:33:20.555596       6 controller.go:168] "Configuration changes detected, backend reload required"
 I1007 02:33:20.640413       6 controller.go:185] "Backend successfully reloaded"
 I1007 02:33:20.640663       6 event.go:285] Event(v1.ObjectReference{Kind:"Pod", Namespace:"ingress-nginx", Name:"ingress-nginx-controller-5cc4f7674-x6s6l", UID:"b368e19a-99b4-488a-83a6-707c62de6dd0", APIVersion:"v1", ResourceVersion:"142195", FieldPath:""}): type: 'Normal' reason: 'RELOAD' NGINX reload triggered due to a change in configuration
-```
+```  
   
   
   
 http 요청을 해보면,
 ```console
 curl -H "HOST:hsson.com" <http://a92~~.elb.ap-northeast-2.amazonaws.com/foo>
-```
+```  
   
   
   
@@ -173,4 +178,4 @@ x-forwarded-scheme=http
 x-real-ip=219.241.x.x
 x-request-id=f8c29d4ff3e342bfd68b478a1e8b6587
 x-scheme=http
-```
+```  
