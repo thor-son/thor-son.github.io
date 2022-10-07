@@ -10,11 +10,12 @@ tag: [eks, aws, kubernetes, ingress]
 > aws eks 환경에 ingress-nginx를 구축하고, source-ip를 받아 보자.  
   
   
+  
 aws eks에서 ingress-nginx를 설치할 경우, service type=LoadBalancer를 nlb로 구성해준다.
-[link](https://kubernetes.github.io/ingress-nginx/deploy/#aws)
+<a href="[http://example.com/](https://kubernetes.github.io/ingress-nginx/deploy/#aws)" target="_blank">link</a>
+
 
 ### eks ingress-nginx 구축
-  
 [link](https://kubernetes.github.io/ingress-nginx/deploy/#network-load-balancer-nlb)
 
 **kubectl apply로 구축**  
@@ -88,7 +89,9 @@ W1007 01:50:48.650866       6 controller.go:258] ignoring ingress ingress-test i
 I1007 01:50:48.650887       6 main.go:100] "successfully validated configuration, accepting" ingress="default/ingress-test"
 I1007 01:50:48.659468       6 store.go:426] "Ignoring ingress because of error while validating ingress class" ingress="default/ingress-test" error="ingress does not contain a valid IngressClass"
 ```
-
+  
+  
+  
 **해결방법**
   
 ingress.yaml에 `ingressClassName`을 입력하고 적용  
@@ -100,6 +103,7 @@ spec:
   rules:
 ....
 ```
+  
   
   
 또는
@@ -152,6 +156,7 @@ http 요청을 해보면,
 ```console
 curl -H "HOST:hsson.com" <http://a92~~.elb.ap-northeast-2.amazonaws.com/foo>
 ```
+  
   
   
 client 정보출력해주는 svc 에서 아래와 같은 출력이 나왔다.
