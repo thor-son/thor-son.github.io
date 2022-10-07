@@ -110,7 +110,7 @@ spec:
 또는
   
 ingressClass 에 대한 문서를 보니, default 로 class를 지정할 수 있었다.  
-<a href="https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/ingress/ingress_class/s" target="_blank">link</a>
+<a href="https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/guide/ingress/ingress_class/" target="_blank">link</a>
 
 ```console
 $ kubectl get ingressclasses --namespace=ingress-nginx
