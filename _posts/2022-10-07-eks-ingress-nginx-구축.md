@@ -17,14 +17,17 @@ aws eks에서 ingress-nginx를 설치할 경우, service type=LoadBalancer를 nl
 
 ### eks ingress-nginx 구축
 <a href="https://kubernetes.github.io/ingress-nginx/deploy/#network-load-balancer-nlb" target="_blank">link</a>
-  
-  
+
+<br>
+
 **kubectl apply로 구축**  
 
 ```console
 kubectl apply -f <https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.4.0/deploy/static/provider/aws/deploy.yaml>
 ```
-  
+
+<br>
+<br>  
   
 **service 확인**
 ```console
@@ -36,7 +39,8 @@ a92d5~~.elb.ap-northeast-2.amazonaws.com   80:30037/TCP,443:31998/TCP   4h24m
 ingress-nginx-controller-admission   ClusterIP      10.x.x.x   <none>
 ```
 
-  
+<br>
+<br>
    
 **ingress 생성**
 ingress.yaml
@@ -66,12 +70,14 @@ spec:
 $ kubectl apply -f ingress.yaml
 ```
   
-  
+<br>
+<br>  
   
   
 ### 트러블슈팅
   
-   
+<br>
+<br>   
 ingress.yaml 적용했지만 address 가 안나오지 않았다.
 
 ```console
@@ -80,7 +86,11 @@ $ kubectl get ingress -A
 NAMESPACE       NAME           CLASS    HOSTS   ADDRESS   PORTS   AGE
 ingress-nginx   ingress-test   <none>   *                 80      39m
 ```
-  
+
+<br>
+<br>
+
+
 ingress-nginx-controller pod의 로그를 보니, IngressClass 쪽의 이슈로 확인된다.
 
 ```console
@@ -91,7 +101,8 @@ I1007 01:50:48.650887       6 main.go:100] "successfully validated configuration
 I1007 01:50:48.659468       6 store.go:426] "Ignoring ingress because of error while validating ingress class" ingress="default/ingress-test" error="ingress does not contain a valid IngressClass"
 ```  
   
-  
+<br>
+<br> 
   
 **해결방법**
   
@@ -105,7 +116,8 @@ spec:
 ....
 ```  
   
-  
+<br>
+<br>  
   
 또는
   
@@ -139,7 +151,8 @@ metadata:
 ![ingressClass](/assets/images/ingressClass.png)
   
   
-  
+<br>
+<br> 
   
   
 ingress-contoller 의 pod log가 아래와 같이 출력이되면 ingress가 잘 설정 된 것이다.
@@ -154,7 +167,36 @@ I1007 02:33:20.555596       6 controller.go:168] "Configuration changes detected
 I1007 02:33:20.640413       6 controller.go:185] "Backend successfully reloaded"
 I1007 02:33:20.640663       6 event.go:285] Event(v1.ObjectReference{Kind:"Pod", Namespace:"ingress-nginx", Name:"ingress-nginx-controller-5cc4f7674-x6s6l", UID:"b368e19a-99b4-488a-83a6-707c62de6dd0", APIVersion:"v1", ResourceVersion:"142195", FieldPath:""}): type: 'Normal' reason: 'RELOAD' NGINX reload triggered due to a change in configuration
 ```  
+
+<br>
+<br>
+
+**proxy-protocol 설정**
+
+<br>
+
+ingress-nginx-controller  service에서 `externalTrafficPolicy=Cluster` 인 상태로 soruce ip를 얻으려면, proxy-protocol 을 사용하면 된다.
+<a href="https://github.com/kubernetes/ingress-nginx/blob/30809c066cd027079cbb32dccc8a101d6fbffdcb/docs/user-guide/miscellaneous.md" target="_blank">link</a>
   
+<br>
+
+ingress-nginx-controller  configmap에 넣어준다.  
+```yaml
+apiVersion: v1
+data:
+  allow-snippet-annotations: "true"
+  use-proxy-protocol: "true"
+kind: ConfigMap
+```
+  
+<br>
+<br>
+   
+aws LoadBalancer 의 대상그룹(targetGroup) 에서 속성 중 proxy-protocol 을 활성화 한다.  
+![ingressClass](/assets/images/20221017_targetgroup_proxy-protocol.png)
+  
+<br>
+<br> 
   
   
 http 요청을 해보면,
