@@ -20,7 +20,8 @@ aws eks에서 ingress-nginx를 설치할 경우, service type=LoadBalancer를 nl
 
 <br>
 
-**kubectl apply로 구축**  
+
+#### kubectl apply로 구축  
 
 ```console
 kubectl apply -f <https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.4.0/deploy/static/provider/aws/deploy.yaml>
@@ -29,7 +30,7 @@ kubectl apply -f <https://raw.githubusercontent.com/kubernetes/ingress-nginx/con
 <br>
 <br>  
   
-**service 확인**
+#### service 확인
 ```console
 $ kubectl get svc -n ingress-nginx
 
@@ -42,7 +43,7 @@ ingress-nginx-controller-admission   ClusterIP      10.x.x.x   <none>
 <br>
 <br>
    
-**ingress 생성**
+#### ingress 생성
 ingress.yaml
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -104,7 +105,7 @@ I1007 01:50:48.659468       6 store.go:426] "Ignoring ingress because of error w
 <br>
 <br> 
   
-**해결방법**
+#### 해결방법
   
 ingress.yaml에 `ingressClassName`을 입력하고 적용  
 _ingressclass는 nlb를 설치할 때, 같이 설치가 되었다._
@@ -171,7 +172,7 @@ I1007 02:33:20.640663       6 event.go:285] Event(v1.ObjectReference{Kind:"Pod",
 <br>
 <br>
 
-**proxy-protocol 설정**
+### proxy-protocol 설정
 
 <br>
 
@@ -185,7 +186,7 @@ ingress-nginx-controller  configmap에 넣어준다.
 apiVersion: v1
 data:
   allow-snippet-annotations: "true"
-  use-proxy-protocol: "true"
+  use-proxy-protocol: "true"     <--- 추가
 kind: ConfigMap
 ```
   
@@ -212,7 +213,7 @@ HEADERS RECEIVED:
 accept=*/*
 host=hsson.com
 user-agent=curl/7.54.0
-**x-forwarded-for=219.241.x.x  <-- client source ip 알맞게 됨**
+x-forwarded-for=219.241.x.x    <-- client source ip 알맞게 됨
 x-forwarded-host=hsson.com
 x-forwarded-port=80
 x-forwarded-proto=http
